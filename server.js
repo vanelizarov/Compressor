@@ -1,3 +1,5 @@
+process.env.PWD = process.cwd();
+
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -27,7 +29,7 @@ if (isDevelopment) {
     app.use(require('webpack-hot-middleware')(compiler));
 
 } else {
-    app.use(express.static(path.join(process.cwd(), 'dist')));
+    app.use(express.static(path.join(process.env.PWD, 'dist')));
     //app.use(express.static(path.join(__dirname, 'dist')));
 }
 
