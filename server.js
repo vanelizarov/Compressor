@@ -45,7 +45,7 @@ server.listen(port, () => {
 io.on('connection', (socket) => {
     console.log('--> Someone connected to socket');
 
-    socket.on('frame', (data) => {
-        console.log(`----> Received data: ${data}`);
+    socket.on('client:sent_img_data', (payload) => {
+        console.log(`----> Received data's first pixel: rgba(${payload.data[0]}, ${payload.data[1]}, ${payload.data[2]}, ${payload.data[3]})`);
     })
 });

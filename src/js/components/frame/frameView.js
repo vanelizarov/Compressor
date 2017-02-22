@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+import { sendImageData } from '../../actions';
+
 class FrameView extends Component {
 
     componentDidMount() {
@@ -42,11 +47,18 @@ class FrameView extends Component {
         let {width: w, height: h} = this.canvas;
         //console.log(w, h);
 
+        const sendImageData = this.props.sendImageData;
+
         window.setInterval(() => {
             cameraContext.drawImage(img, 0, 0, w, h);
             let imageData = cameraContext.getImageData(0, 0, w, h);
+
+            sendImageData({
+                data: imageData
+            });
+
             cameraContext.putImageData(imageData, 0, 0);
-        }, 33);
+        }, 2000);
     }
 
     render() {
@@ -83,4 +95,16 @@ FrameView.propTypes = {
     type: React.PropTypes.string.isRequired
 };
 
-export default FrameView;
+const matchDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        sendImageData: sendImageData
+    }, dispatch);
+};
+
+const mapStateToProps = (state) => {
+    return {
+
+    }
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(FrameView);

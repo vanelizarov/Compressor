@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 
 import FrameView from './frame/frameView';
 import Logo from './logo';
@@ -105,10 +103,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-const matchDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-
-    }, dispatch);
-};
-
-export default connect(mapStateToProps, matchDispatchToProps)(App);
+export default App;

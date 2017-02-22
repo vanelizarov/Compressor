@@ -10,7 +10,7 @@ export const receivedImageData = (payload) => {
     }
 };
 
-export const sentImageData = (payload) => {
+export const sendImageData = (payload) => {
     return {
         type: SENT_IMG_DATA,
         payload // payload: { data: ... }
