@@ -1,4 +1,4 @@
-# ImageCompression
+# Compressor
 
 Javascript implementation of Huffman, RLE, LZW, logarithmic and exponential transformation algorithms made with React, Redux, Express, WebRTC and Bootstrap
 
