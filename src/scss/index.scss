@@ -1,13 +1,7 @@
-html {
-    box-sizing: border-box;
-}
+@import './global/colors';
+@import './global/mixins';
+@import './global/body';
 
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #000;
-    font-size: 2rem;
-}
+@import './components/frame/frame-view';
+@import './components/virtual-video';
+@import './components/logo';

@@ -1,0 +1,11 @@
+module.exports = Object.freeze({
+    HUFFMAN_COMP: 'HUFFMAN_COMP',
+    HUFFMAN_UNCOMP:'HUFFMAN_UNCOMP',
+    RLE_COMP: 'RLE_COMP',
+    RLE_UNCOMP: 'RLE_UNCOMP',
+    LZW_COMP: 'LZW_COMP',
+    LZW_UNCOMP: 'LZW_UNCOMP',
+    LOG_COMP: 'LOG_COMP',
+    EXP_COMP: 'EXP_COMP',
+    ORIGINAL: 'ORIGINAL'
+});

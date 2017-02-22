@@ -1,14 +1,20 @@
 const express = require('express');
 const path = require('path');
-const port = process.env.PORT || 8080;
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
+const huffman = require('./src/js/logic/transformations/huffman');
+const rle = require('./src/js/logic/transformations/rle');
+const lzw = require('./src/js/logic/transformations/lzw');
+
+const port = process.env.PORT || 8080;
 const isDevelopment = process.argv.indexOf('--development') !== -1;
 
 if (isDevelopment) {
 
     const webpack = require('webpack');
-    const webpackConfig = require('./webpack.config');
+    const webpackConfig = require('./webpack.config.js');
     const compiler = webpack(webpackConfig);
 
     app.use(require('webpack-dev-middleware')(compiler, {
@@ -28,6 +34,18 @@ app.get('*', (request, response) => {
     response.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.listen(port);
+server.listen(port, () => {
+    console.log(`--> Server listening on port: ${port}`);
+});
 
-console.log(`Server listening on port: ${port}`);
+//
+// Socket events
+//
+
+io.on('connection', (socket) => {
+    console.log('--> Someone connected to socket');
+
+    socket.on('frame', (data) => {
+        console.log(`----> Received data: ${data}`);
+    })
+});

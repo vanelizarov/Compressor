@@ -19,17 +19,23 @@
     "css-loader": "^0.26.1",
     "express": "^4.14.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.2",
+    "material-ui": "^0.17.0",
     "node-sass": "^4.5.0",
     "react": "^15.4.2",
+    "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
     "react-hot-loader": "^3.0.0-beta.3",
     "react-redux": "^5.0.2",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "sass-loader": "^4.1.1",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-dev-server": "^1.16.3",
-    "webpack-hot-middleware": "^2.16.1"
+    "webpack-hot-middleware": "^2.16.1",
+    "webrtc-adapter": "^3.1.6"
   }
 }
