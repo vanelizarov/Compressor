@@ -27,7 +27,7 @@ if (isDevelopment) {
     app.use(require('webpack-hot-middleware')(compiler));
 
 } else {
-    app.use(express.static('dist'));
+    app.use(express.static(path.join(process.cwd(), 'dist')));
     //app.use(express.static(path.join(__dirname, 'dist')));
 }
 
