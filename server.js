@@ -27,14 +27,15 @@ if (isDevelopment) {
     app.use(require('webpack-hot-middleware')(compiler));
 
 } else {
-    app.use(express.static(path.join(__dirname, 'dist')));
+    app.use(express.static('dist'));
+    //app.use(express.static(path.join(__dirname, 'dist')));
 }
 
 // app.get('*', (request, response) => {
 //     response.sendFile(path.join(__dirname, 'dist/index.html'));
 // });
 
-app.use(express.static(path.join(__dirname, 'dist')));
+
 
 server.listen(port, () => {
     console.log(`--> Server listening on port: ${port}`);
