@@ -26,7 +26,18 @@ class FrameView extends Component {
                 .then(this._onMediaStream.bind(this))
                 .catch(this._onStreamError);
 
+        } else {
+            let outputContext = this.outputView.getContext('2d');
+            let image = new Image();
+
+            window.setInterval(() => {
+                image.onload = () => {
+                    outputContext.drawImage(image, 0, 0);
+                };
+                image.src = 'data:image/png;base64,' + this.props.data;
+            }, 35)
         }
+
 
     }
 
@@ -43,22 +54,22 @@ class FrameView extends Component {
     }
 
     _drawStream(img) {
-        let cameraContext = this.canvas.getContext('2d');
-        let {width: w, height: h} = this.canvas;
+        let cameraContext = this.outputView.getContext('2d');
+        let {width: w, height: h} = this.outputView;
         //console.log(w, h);
 
         const sendImageData = this.props.sendImageData;
 
         window.setInterval(() => {
             cameraContext.drawImage(img, 0, 0, w, h);
-            let imageData = cameraContext.getImageData(0, 0, w, h);
 
             sendImageData({
-                data: imageData
+                data: this.outputView.toDataURL('png').replace('data:image/png;base64,', '')
+                //data:image/png;base64,
             });
 
-            cameraContext.putImageData(imageData, 0, 0);
-        }, 2000);
+
+        }, 35);
     }
 
     render() {
@@ -67,8 +78,8 @@ class FrameView extends Component {
 
         if (isOriginal) {
             return (
-                <div className={'frame-view ' + this.props.className}>
-                    <canvas ref={(canvas) => { this.canvas = canvas }}>
+                <div className={'frame-view'} >
+                    <canvas className="frame-view--output" ref={(outputView) => { this.outputView = outputView }}>
 
                     </canvas>
                     <video autoPlay={true} className={'virtual-video'} ref={(virtualVideo) => { this.virtualVideo = virtualVideo }}>
@@ -78,8 +89,8 @@ class FrameView extends Component {
             )
         } else {
             return (
-                <div className={'frame-view ' + this.props.className}>
-                    <canvas ref={(canvas) => { this.canvas = canvas }}>
+                <div className={'frame-view'}>
+                    <canvas ref={(outputView) => { this.outputView = outputView }} className="frame-view--output">
 
                     </canvas>
                 </div>

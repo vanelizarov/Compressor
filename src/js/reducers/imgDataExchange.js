@@ -5,7 +5,7 @@ import {
 } from '../actions/types';
 
 import io from 'socket.io-client';
-const socket = io(`https://compresssor.herokuapp.com:8080`);
+const socket = io(`http://localhost:8080`);
 
 const defaultState = {
     types: {

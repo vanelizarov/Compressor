@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 
 
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+import { receivedImageData } from '../actions';
+
 import FrameView from './frame/frameView';
 import Logo from './logo';
 
@@ -25,6 +30,9 @@ import {
     ORIGINAL
 } from '../logic/transformations/types';
 
+import io from 'socket.io-client';
+const socket = io(`http://localhost:8080`);
+
 class App extends Component {
 
     constructor(props) {
@@ -48,7 +56,13 @@ class App extends Component {
                 ]
             ]
         };
-        //console.log(this.state.rows);
+
+    }
+
+    componentDidMount() {
+        socket.on('server:received_img_data:huffman', (payload) => {
+            this.props.receivedImageData(payload);
+        });
     }
 
     render() {
@@ -81,7 +95,7 @@ class App extends Component {
                                         row.map((col) => {
                                             return (
                                                 <Col xs={12} sm={4} key={col}>
-                                                    <FrameView type={col} isOriginal={col === ORIGINAL}/>
+                                                    <FrameView type={col} isOriginal={col === ORIGINAL} data={this.props.types[col]} />
                                                 </Col>
                                             )
                                         })
@@ -97,10 +111,16 @@ class App extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {
-
-    };
+const matchDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        receivedImageData: receivedImageData
+    }, dispatch);
 };
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        types: state.types
+    }
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(App);
