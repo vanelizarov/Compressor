@@ -8,7 +8,6 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 import App from './components/app';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import allReducers from './reducers';
 

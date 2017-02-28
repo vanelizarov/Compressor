@@ -1,14 +1,6 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-
-const types = require('./src/js/logic/transformations/types');
-
-const huffman = require('./src/js/logic/transformations/huffman');
-const rle = require('./src/js/logic/transformations/rle');
-const lzw = require('./src/js/logic/transformations/lzw');
 
 const port = process.env.PORT || 8080;
 const isDevelopment = process.argv.indexOf('--development') !== -1;
@@ -36,25 +28,6 @@ app.get('*', (request, response) => {
     response.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-server.listen(port, () => {
+app.listen(port, () => {
     console.log(`--> Server listening on port: ${port}`);
-});
-
-//
-// Socket events
-//
-
-io.on('connection', (socket) => {
-    console.log('--> Someone connected to socket');
-
-    socket.on('client:sent_img_data', (payload) => {
-        //console.log(`----> Received data: ${payload}`);
-        //console.log(huffman.encode(payload));
-
-        socket.emit('server:received_img_data', {
-            type: types.HUFFMAN_COMP,
-            data: huffman.encode(payload)
-        });
-
-    })
 });

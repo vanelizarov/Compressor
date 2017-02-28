@@ -1,18 +1,19 @@
 import {
-    RECEIVED_IMG_DATA,
-    SENT_IMG_DATA
+    SET_IMG_DATA,
+    SET_VIDEO_STREAM
 } from './types';
 
-export const receivedImageData = (payload) => {
-    return {
-        type: RECEIVED_IMG_DATA,
-        payload // payload: { type: ..., data: ... }
-    }
-};
 
 export const sendImageData = (payload) => {
     return {
-        type: SENT_IMG_DATA,
+        type: SET_IMG_DATA,
         payload // payload: { data: ... }
+    }
+};
+
+export const sendVideoStream = (payload) => {
+    return {
+        type: SET_VIDEO_STREAM,
+        payload
     }
 };

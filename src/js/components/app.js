@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 
+// import {bindActionCreators} from 'redux';
+// import {connect} from 'react-redux';
 
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-
-import { receivedImageData } from '../actions';
-
-import FrameView from './frame/frameView';
+import FrameView from './frameView';
+import VirtualVideo from './virtualVideo';
 import Logo from './logo';
 
 import {
@@ -28,10 +26,7 @@ import {
     LOG_COMP,
     EXP_COMP,
     ORIGINAL
-} from '../logic/transformations/types';
-
-import io from 'socket.io-client';
-const socket = io(`http://localhost:8080`);
+} from '../logic/types';
 
 class App extends Component {
 
@@ -59,12 +54,6 @@ class App extends Component {
 
     }
 
-    componentDidMount() {
-        socket.on('server:received_img_data:huffman', (payload) => {
-            this.props.receivedImageData(payload);
-        });
-    }
-
     render() {
 
 
@@ -86,6 +75,7 @@ class App extends Component {
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
+                <VirtualVideo />
                 <Grid>
                     {
                         this.state.rows.map((row) => {
@@ -95,7 +85,7 @@ class App extends Component {
                                         row.map((col) => {
                                             return (
                                                 <Col xs={12} sm={4} key={col}>
-                                                    <FrameView type={col} isOriginal={col === ORIGINAL} data={this.props.types[col]} />
+                                                    <FrameView type={col} />
                                                 </Col>
                                             )
                                         })
@@ -111,16 +101,4 @@ class App extends Component {
 
 }
 
-const matchDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        receivedImageData: receivedImageData
-    }, dispatch);
-};
-
-const mapStateToProps = (state) => {
-    return {
-        types: state.types
-    }
-};
-
-export default connect(mapStateToProps, matchDispatchToProps)(App);
+export default App;

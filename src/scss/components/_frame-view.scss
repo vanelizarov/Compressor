@@ -7,8 +7,8 @@
     position: relative;
 
     &--output {
-        width: 240px;
-        height: 135px;
+        width: 320px;
+        height: 240px;
         margin: 10px;
         border: $border-color .3px solid;
         @include paper;

@@ -1,2 +1,2 @@
-export const RECEIVED_IMG_DATA = 'RECEIVED_IMG_DATA';
-export const SENT_IMG_DATA = 'SENT_IMG_DATA';
+export const SET_IMG_DATA = 'SET_IMG_DATA';
+export const SET_VIDEO_STREAM = 'SET_VIDEO_STREAM';

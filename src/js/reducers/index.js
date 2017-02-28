@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
 
-import imgDataExchange from './imgDataExchange';
+import exchanges from './exchanges';
 
 const allReducers = combineReducers({
-    imgData: imgDataExchange
+    exchanges: exchanges
 });
 
 export default allReducers;
