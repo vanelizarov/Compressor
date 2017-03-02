@@ -7,6 +7,9 @@ import FrameView from './frameView';
 import VirtualVideo from './virtualVideo';
 import Logo from './logo';
 
+import huffman from '../logic/huffman';
+
+
 import {
     Grid,
     Row,
@@ -16,43 +19,9 @@ import {
     NavItem
 } from 'react-bootstrap';
 
-import {
-    HUFFMAN_COMP,
-    HUFFMAN_UNCOMP,
-    RLE_COMP,
-    RLE_UNCOMP,
-    LZW_COMP,
-    LZW_UNCOMP,
-    LOG_COMP,
-    EXP_COMP,
-    ORIGINAL
-} from '../logic/types';
+import types from '../logic/types';
 
 class App extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            rows: [
-                [
-                    ORIGINAL,
-                    HUFFMAN_COMP,
-                    HUFFMAN_UNCOMP
-                ],
-                [
-                    EXP_COMP,
-                    RLE_COMP,
-                    RLE_UNCOMP
-                ],
-                [
-                    LOG_COMP,
-                    LZW_COMP,
-                    LZW_UNCOMP
-                ]
-            ]
-        };
-
-    }
 
     render() {
 
@@ -77,23 +46,37 @@ class App extends Component {
                 </Navbar>
                 <VirtualVideo />
                 <Grid>
-                    {
-                        this.state.rows.map((row) => {
-                            return (
-                                <Row key={this.state.rows.indexOf(row)}>
-                                    {
-                                        row.map((col) => {
-                                            return (
-                                                <Col xs={12} sm={4} key={col}>
-                                                    <FrameView type={col} />
-                                                </Col>
-                                            )
-                                        })
-                                    }
-                                </Row>
-                            )
-                        })
-                    }
+                    <Row>
+                        <Col xs={12} sm={6}>
+                            <FrameView original={true}/>
+                            <FrameView original={false}/>
+                            <FrameView original={false}/>
+                        </Col>
+                        <Col xs={12} sm={6}>
+                            <FrameView original={false} encodeFunc={huffman.encode} compType={types.HUFFMAN_COMP} uncompType={types.HUFFMAN_UNCOMP}/>
+                            <FrameView original={false}/>
+                            <FrameView original={false}/>
+                        </Col>
+
+                    </Row>
+                    {/*{*/}
+                        {/*this.state.rows.map((row) => {*/}
+                            {/*return (*/}
+                                {/*<Row key={this.state.rows.indexOf(row)}>*/}
+                                    {/*{*/}
+                                        {/*row.map((col) => {*/}
+                                            {/*return (*/}
+                                                {/*<Col xs={12} sm={4} key={col}>*/}
+                                                    {/*<FrameView type={col} />*/}
+                                                {/*</Col>*/}
+                                            {/*)*/}
+                                        {/*})*/}
+                                    {/*}*/}
+                                    {/*<Col xs={12} sm={4}/>*/}
+                                {/*</Row>*/}
+                            {/*)*/}
+                        {/*})*/}
+                    {/*}*/}
                 </Grid>
             </div>
         );

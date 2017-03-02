@@ -3,7 +3,10 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {sendVideoStream} from '../actions';
+import {
+    setVideoStream,
+    setCanPlay
+} from '../actions';
 
 require('webrtc-adapter');
 
@@ -29,7 +32,7 @@ class VirtualVideo extends Component {
     _onMediaStream(stream) {
         window.stream = stream;
         this.virtualVideo.srcObject = stream;
-        this.props.sendVideoStream(this.virtualVideo);
+        this.props.setVideoStream(this.virtualVideo);
     }
 
     _onStreamError(error) {
@@ -38,10 +41,16 @@ class VirtualVideo extends Component {
         window.alert(errStr);
     }
 
+    _onCanPlay() {
+        this.props.setCanPlay();
+    }
 
     render() {
         return (
-            <video autoPlay={true} className={'virtual-video'} ref={(virtualVideo) => { this.virtualVideo = virtualVideo }}>
+            <video autoPlay={true}
+                   className={'virtual-video'}
+                   ref={(virtualVideo) => { this.virtualVideo = virtualVideo }}
+                   onCanPlay={this._onCanPlay.bind(this)}>
 
             </video>
         )
@@ -56,7 +65,8 @@ const mapStateToProps = (state) => {
 
 const matchDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        sendVideoStream: sendVideoStream
+        setVideoStream: setVideoStream,
+        setCanPlay: setCanPlay
     }, dispatch);
 };
 

@@ -32,11 +32,15 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.scss/,
+                test: /\.s?css/,
                 loaders: isDevelopment ? 'style-loader!css-loader?sourceMap!sass-loader?sourceMap' : ExtractTextPlugin.extract({
                     fallbackLoader: 'style-loader',
                     loader: "css-loader!sass-loader"
                 })
+            },
+            {
+                test   : /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+                loader : 'file-loader'
             }
         ]
     },

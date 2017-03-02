@@ -3,8 +3,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    height: 260px;
     position: relative;
+
+    &--message {
+        height: 50px;
+        display: block;
+    }
 
     &--output {
         width: 320px;
