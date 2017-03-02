@@ -36,7 +36,7 @@ const add = (v, arr) => {
 };
 
 
-describe('Add value to right place in [1,3,5,7,9] array', function() {
+describe('Add value to right place in array', function() {
    describe('#indexOf()', function() {
 
        it('should return 2 when value is 5', function() {
