@@ -40,15 +40,32 @@ class FrameView extends Component {
 
                 if (this.props.stream && this.props.canPlay) {
                     let originalImgData = this.props.types[types.ORIGINAL];
+                    let {width: w, height: h} = this.outputView;
 
                     if (this.props.encodeFunc) {
-                        this.props.encodeFunc(originalImgData, (encoded, time) => {
+                        this.props.encodeFunc(originalImgData, (encoded, encTime) => {
+
                             this.props.setImageData({
                                 type: this.props.compType,
                                 data: encoded
                             });
-                            //console.log(this.props.types[this.props.compType]);
-                            console.log(time);
+
+                            console.log(`--> Compression time ${encTime}`);
+
+                            this.props.decodeFunc(encoded, (decoded, decTime) => {
+
+                                this.props.setImageData({
+                                    type: this.props.uncompType,
+                                    data: decoded
+                                });
+
+                                console.log(`--> Decompression time ${decTime}`);
+
+                                let restored = new ImageData(Uint8ClampedArray.from(decoded), w, h);
+                                this.outputView.getContext('2d').putImageData(restored, 0, 0);
+
+                            });
+
                         });
                     }
 
