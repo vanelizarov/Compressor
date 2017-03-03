@@ -53,7 +53,7 @@ class App extends Component {
                             <FrameView original={false}/>
                         </Col>
                         <Col xs={12} sm={6}>
-                            <FrameView original={false} encodeFunc={huffman.encode} compType={types.HUFFMAN_COMP} uncompType={types.HUFFMAN_UNCOMP}/>
+                            <FrameView original={false} encodeFunc={huffman.encode} decodeFunc={huffman.decode} compType={types.HUFFMAN_COMP} uncompType={types.HUFFMAN_UNCOMP}/>
                             <FrameView original={false}/>
                             <FrameView original={false}/>
                         </Col>
