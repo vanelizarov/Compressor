@@ -13,6 +13,7 @@ npm i
 ## Requirements
 * nodemon: `npm i -g nodemon`
 * webpack: `npm i -g webpack`
+* Mocha: `npm i -g mocha`
 
 ## Usage
 `npm run start-dev` to run in development mode (hot reloading and no extracted stylesheets)
