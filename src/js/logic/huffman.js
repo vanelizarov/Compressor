@@ -1,3 +1,5 @@
+const utils = require('../utils');
+
 const binarize = (from, to) => {
 
     if (from.hasOwnProperty('children')) {
@@ -12,18 +14,10 @@ const binarize = (from, to) => {
 
 };
 
-// const textize = (bin) => {
-//     let text = '';
-//     for (let i = 0, len = bin.length / 8; i < len; i++) {
-//         text += String.fromCharCode(parseInt(bin.substring(i * 8, 8), 2));
-//     }
-//     return text;
-// };
-
 const encode = (imageData, callback) => {
-    //console.log(imageData.length);
 
-    let start = new Date();
+    const et = new utils.ExecTime();
+    et.start();
 
     let freqs = {};
 
@@ -61,49 +55,9 @@ const encode = (imageData, callback) => {
         };
         tree.splice(0, 2);
 
-        // tree.push(node);
-        // tree.sort((a, b) => {
-        //     if (a.freq < b.freq && !b.hasOwnProperty('char')) {
-        //         return -1;
-        //     }
-        //     if (a.freq >= b.freq && !b.hasOwnProperty('char')) {
-        //         return 1;
-        //     }
-        //     return 0;
-        // });
-
         if (tree.length > 0) {
-            for (let i = 0, l = tree.length; i < l; i++) {
-                if (node.freq === tree[i].freq) {
-                    tree.splice(i, 0, node);
-                    break;
-                }
-
-                if (node.freq > tree[i].freq) {
-                    if (tree[i + 1] !== undefined) {
-                        if (node.freq < tree[i + 1].freq) {
-                            tree.splice(i + 1, 0, node);
-                            break;
-                        }
-                    } else {
-                        tree.push(node);
-                        break;
-                    }
-                }
-
-                if (node.freq === tree[l - 1].freq) {
-                    tree.splice(l - 1, 0, node);
-                    break;
-                }
-
-                if (node.freq < tree[0].freq) {
-                    tree.unshift(node);
-                    break;
-                }
-            }
-
+            utils.add(node, tree, 'freq');
             len--;
-
         } else {
             tree.push(node);
             break;
@@ -113,18 +67,37 @@ const encode = (imageData, callback) => {
     let bins = {};
     binarize(tree[0].hasOwnProperty('char') ? {children: [tree[0]]} : tree[0], bins);
 
-    let binCompImgData = '';
+    let binCompImgData = [bins];
 
     for (let i = 0, len = imageData.length; i < len; i++) {
-        binCompImgData += bins[imageData[i]];
+        binCompImgData.push(bins[imageData[i]]);
     }
 
-    let finish = new Date();
+    et.finish();
 
-    callback(binCompImgData, finish.getTime() - start.getTime());
+    callback(binCompImgData, et.measure());
+
+};
+
+const decode = (encoded, callback) => {
+
+    const et = new utils.ExecTime();
+    et.start();
+
+    let keys = encoded.splice(0, 1)[0];
+    let decoded = [];
+
+    for (let i = 0, len = encoded.length; i < len; i++) {
+        decoded.push(Number.parseInt(utils.getKey(keys, encoded[i])));
+    }
+
+    et.finish();
+
+    callback(decoded, et.measure());
 
 };
 
 module.exports = {
-    encode: encode
+    encode,
+    decode
 };
