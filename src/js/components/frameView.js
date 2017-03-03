@@ -24,7 +24,6 @@ class FrameView extends Component {
                     cameraContext.drawImage(this.props.stream, 0, 0, w, h);
 
                     let pixels = cameraContext.getImageData(0, 0, w, h).data;
-                    //console.log(pixels);
                     this.props.setImageData({
                         type: types.ORIGINAL,
                         data: pixels
