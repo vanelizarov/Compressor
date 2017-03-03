@@ -19,5 +19,7 @@ npm i
 
 `npm run start-prod` to run in production mode (bundled `.js` and `.css`)
 
+`npm test` to run Mocha tests for algorithms
+
 ## License
 MIT
