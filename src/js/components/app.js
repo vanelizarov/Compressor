@@ -59,24 +59,6 @@ class App extends Component {
                         </Col>
 
                     </Row>
-                    {/*{*/}
-                        {/*this.state.rows.map((row) => {*/}
-                            {/*return (*/}
-                                {/*<Row key={this.state.rows.indexOf(row)}>*/}
-                                    {/*{*/}
-                                        {/*row.map((col) => {*/}
-                                            {/*return (*/}
-                                                {/*<Col xs={12} sm={4} key={col}>*/}
-                                                    {/*<FrameView type={col} />*/}
-                                                {/*</Col>*/}
-                                            {/*)*/}
-                                        {/*})*/}
-                                    {/*}*/}
-                                    {/*<Col xs={12} sm={4}/>*/}
-                                {/*</Row>*/}
-                            {/*)*/}
-                        {/*})*/}
-                    {/*}*/}
                 </Grid>
             </div>
         );
