@@ -16,8 +16,10 @@ const binarize = (from, to) => {
 
 const encode = (imageData, callback) => {
 
-    const et = new utils.ExecTime();
-    et.start();
+    // const et = new utils.ExecTime();
+    // et.start();
+
+    let start = new Date();
 
     let freqs = {};
 
@@ -73,27 +75,31 @@ const encode = (imageData, callback) => {
         binCompImgData.push(bins[imageData[i]]);
     }
 
-    et.finish();
+    // et.finish();
+    let finish = new Date();
 
-    callback(binCompImgData, et.measure());
+    callback(binCompImgData, finish.getTime() - start.getTime());//et.measure());
 
 };
 
 const decode = (encoded, callback) => {
 
-    const et = new utils.ExecTime();
-    et.start();
+    // const et = new utils.ExecTime();
+    // et.start();
+    let start = new Date();
 
-    let keys = encoded.splice(0, 1)[0];
+    let keys = utils.swap(encoded.splice(0, 1)[0]);
     let decoded = [];
 
     for (let i = 0, len = encoded.length; i < len; i++) {
-        decoded.push(Number.parseInt(utils.getKey(keys, encoded[i])));
+        //decoded.push(Number.parseInt(keys[encoded[i]]));
+        decoded.push(keys[encoded[i]]);
     }
 
-    et.finish();
+    // et.finish();
+    let finish = new Date();
 
-    callback(decoded, et.measure());
+    callback(decoded, finish.getTime() - start.getTime());//et.measure());
 
 };
 
