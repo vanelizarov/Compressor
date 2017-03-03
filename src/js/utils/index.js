@@ -11,6 +11,14 @@ function ExecTime() {
 
 const getKey = (obj, value) => Object.keys(obj).find((k) => obj[k] === value);
 
+const swap = (obj) => {
+    let swapped = {};
+    for (let k in obj) {
+        swapped[obj[k]] = parseInt(k); // TODO: test performance with hasOwnProperty() added
+    }
+    return swapped;
+};
+
 const add = (v, arr, comp = '') => {
 
     for (let i = 0, len = arr.length; i < len; i++) {
@@ -54,5 +62,6 @@ const add = (v, arr, comp = '') => {
 module.exports = {
     ExecTime,
     getKey,
-    add
+    add,
+    swap
 };
