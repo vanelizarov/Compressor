@@ -3,6 +3,7 @@ const should = require('should');
 const add = require('../src/js/utils').add;
 const getKey = require('../src/js/utils').getKey;
 const swap = require('../src/js/utils').swap;
+const normalize = require('../src/js/utils').normalize;
 
 describe('Utility functions', function() {
 
@@ -48,6 +49,16 @@ describe('Utility functions', function() {
 
         it("should return {'a': 5, 'b': 3} when passing {'5': 'a', '3': 'b'}", function() {
             swap({'5': 'a', '3': 'b'}).should.eql({'a': 5, 'b': 3});
+        });
+
+    });
+
+    describe('#normalize()', function() {
+
+
+        it("should return [5, 6, 7, 0] when passing size = 4", function() {
+            normalize([5, 6, 7, 0, 9, 23, 34, 5, 8, 7, 9, 7, 7], 4).should.have.lengthOf(4);
+            normalize([5, 6, 7], 4).should.have.lengthOf(4);
         });
 
     });
