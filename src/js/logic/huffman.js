@@ -16,10 +16,8 @@ const binarize = (from, to) => {
 
 const encode = (imageData, callback) => {
 
-    // const et = new utils.ExecTime();
-    // et.start();
-
-    let start = new Date();
+    const et = new utils.ExecTime();
+    et.start();
 
     let freqs = {};
 
@@ -75,35 +73,50 @@ const encode = (imageData, callback) => {
         binCompImgData.push(bins[imageData[i]]);
     }
 
-    // et.finish();
+    et.finish();
     let finish = new Date();
 
-    callback(binCompImgData, finish.getTime() - start.getTime());//et.measure());
+    callback(binCompImgData, et.measure());
 
 };
 
 const decode = (encoded, callback) => {
 
-    // const et = new utils.ExecTime();
-    // et.start();
-    let start = new Date();
+    const et = new utils.ExecTime();
+    et.start();
 
     let keys = utils.swap(encoded.splice(0, 1)[0]);
     let decoded = [];
 
     for (let i = 0, len = encoded.length; i < len; i++) {
-        //decoded.push(Number.parseInt(keys[encoded[i]]));
         decoded.push(keys[encoded[i]]);
     }
 
-    // et.finish();
-    let finish = new Date();
+    et.finish();
 
-    callback(decoded, finish.getTime() - start.getTime());//et.measure());
+    callback(decoded, et.measure());
+
+};
+
+const adapt = (encoded, size, callback) => {
+
+    let adapted = [];
+
+    encoded.splice(0, 1);
+
+    for (let i = 0, len = encoded.length; i < len; i += 8) {
+        let binStr = `${encoded[i]}${encoded[i + 1]}${encoded[i + 2]}${encoded[i + 3]}${encoded[i + 4]}${encoded[i + 5]}${encoded[i + 6]}${encoded[i + 7]}`;
+        adapted.push(parseInt(binStr, 2));
+    }
+
+    adapted = utils.normalize(adapted, size);
+
+    callback(adapted);
 
 };
 
 module.exports = {
     encode,
-    decode
+    decode,
+    adapt
 };
