@@ -54,7 +54,22 @@ const decode = (encoded, callback) => {
 
 };
 
+const adapt = (encoded, size, callback) => {
+
+    let adapted = [];
+
+    for (let i = 0, len = encoded.length; i < len; i += 2) {
+        adapted.push(encoded[i]);
+    }
+
+    adapted = utils.normalize(adapted, size, 255);
+
+    callback(adapted);
+
+};
+
 module.exports = {
     encode,
-    decode
+    decode,
+    adapt
 };
