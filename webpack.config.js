@@ -20,6 +20,8 @@ const plugins = [
 ];
 
 isDevelopment && plugins.push(new webpack.HotModuleReplacementPlugin());
+!isDevelopment && plugins.push(new webpack.optimize.UglifyJsPlugin());
+
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
@@ -34,13 +36,13 @@ module.exports = {
             {
                 test: /\.s?css/,
                 loaders: isDevelopment ? 'style-loader!css-loader?sourceMap!sass-loader?sourceMap' : ExtractTextPlugin.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: "css-loader!sass-loader"
+                    fallback: 'style-loader',
+                    use: "css-loader!sass-loader"
                 })
             },
             {
                 test   : /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-                loader : 'file-loader'
+                loader : 'file-loader?name=assets/fonts/[name].[ext]'
             }
         ]
     },
