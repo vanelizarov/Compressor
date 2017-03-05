@@ -42,7 +42,7 @@ class FrameView extends Component {
                     let originalImgData = this.props.types[types.ORIGINAL];
                     let {width: w, height: h} = this.outputView;
 
-                    if (this.props.encodeFunc) {
+                    if (this.props.encodeFunc && !this.props.reformatFunc) {
                         this.props.encodeFunc(originalImgData, (encoded, encTime) => {
 
                             this.props.setImageData({
@@ -50,23 +50,43 @@ class FrameView extends Component {
                                 data: encoded
                             });
 
-                            console.log(`--> Compression time ${encTime}`);
+                            //console.log(`--> Compression time ${encTime}`);
 
-                            this.props.decodeFunc(encoded, (decoded, decTime) => {
+                            if (this.props.decodeFunc) {
+                                this.props.decodeFunc(encoded, (decoded, decTime) => {
 
-                                this.props.setImageData({
-                                    type: this.props.uncompType,
-                                    data: decoded
+                                    this.props.setImageData({
+                                        type: this.props.uncompType,
+                                        data: decoded
+                                    });
+
+                                    //console.log(`--> Decompression time ${decTime}`);
+
+                                    let restored = new ImageData(Uint8ClampedArray.from(decoded), w, h);
+                                    this.outputView.getContext('2d').putImageData(restored, 0, 0);
+
                                 });
+                            } else {
+                                // No decode function specified
 
-                                console.log(`--> Decompression time ${decTime}`);
+                                let imageData = new ImageData(Uint8ClampedArray.from(encoded), w, h);
+                                this.outputView.getContext('2d').putImageData(imageData, 0, 0);
 
-                                let restored = new ImageData(Uint8ClampedArray.from(decoded), w, h);
-                                this.outputView.getContext('2d').putImageData(restored, 0, 0);
-
-                            });
+                            }
 
                         });
+                    } else {
+
+                        const size = 4 * w * h;
+
+                        this.props.reformatFunc(this.props.types[this.props.compType], size, (reformatted) => {
+
+                            let imageData = new ImageData(Uint8ClampedArray.from(reformatted), w, h);
+
+                            this.outputView.getContext('2d').putImageData(imageData, 0, 0);
+
+                        })
+
                     }
 
                 }
@@ -80,10 +100,12 @@ class FrameView extends Component {
         if (this.props.canPlay) {
             return (
                 <div className={'frame-view'} >
-                    <canvas className="frame-view--output"
-                            ref={(outputView) => {this.outputView = outputView}}>
-
-                    </canvas>
+                    <div className="frame-view--output-wrapper"
+                         data-title={this.props.title}>
+                        <canvas className="frame-view--output"
+                                ref={(outputView) => {this.outputView = outputView}}>
+                        </canvas>
+                    </div>
                 </div>
             )
         } else {
@@ -101,7 +123,9 @@ class FrameView extends Component {
 
 FrameView.propTypes = {
     original: React.PropTypes.bool.isRequired,
+    title: React.PropTypes.string.isRequired,
     encodeFunc: React.PropTypes.func,
+    reformatFunc: React.PropTypes.func,
     decodeFunc: React.PropTypes.func,
     compType: React.PropTypes.string,
     uncompType: React.PropTypes.string
