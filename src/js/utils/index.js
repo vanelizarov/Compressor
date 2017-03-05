@@ -59,9 +59,28 @@ const add = (v, arr, comp = '') => {
 
 };
 
+const normalize = (arr, size, value = 0) => {
+
+    if (arr.length > size) {
+        while (arr.length !== size) {
+            arr.pop();
+        }
+    }
+
+    if (arr.length < size) {
+        while (arr.length !== size) {
+            arr.push(value);
+        }
+    }
+
+    return arr;
+
+};
+
 module.exports = {
     ExecTime,
     getKey,
     add,
-    swap
+    swap,
+    normalize
 };
