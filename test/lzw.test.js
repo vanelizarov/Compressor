@@ -9,7 +9,6 @@ describe('LZW algorithm', function() {
 
             lzw.encode([255, 102, 103, 255, 102, 104, 255], function(encoded) {
                 encoded.should.eql([ 'ÿ', 'f', 'g', 'Ā', 'h', 'ÿ' ]);
-                // console.log(encoded);
                 done();
             });
 
@@ -24,7 +23,6 @@ describe('LZW algorithm', function() {
 
             lzw.decode(['ÿ', 'f', 'g', 'Ā', 'h', 'ÿ'], function(decoded) {
                 decoded.should.eql([255, 102, 103, 255, 102, 104, 255]);
-                 // console.log(decoded);
                 done();
             });
 
