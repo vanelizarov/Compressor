@@ -76,7 +76,7 @@ const encode = (imageData, callback) => {
     et.finish();
     let finish = new Date();
 
-    callback(binCompImgData, et.measure());
+    callback(binCompImgData, et.measure(), binCompImgData.join('').length / 8);
 
 };
 
@@ -86,6 +86,7 @@ const decode = (encoded, callback) => {
     et.start();
 
     let keys = utils.swap(encoded.splice(0, 1)[0]);
+    //console.log(keys);
     let decoded = [];
 
     for (let i = 0, len = encoded.length; i < len; i++) {
@@ -102,11 +103,13 @@ const adapt = (encoded, size, callback) => {
 
     let adapted = [];
 
-    encoded.splice(0, 1);
+    //encoded.splice(0, 1);
+    encoded = encoded.join("");
 
     for (let i = 0, len = encoded.length; i < len; i += 8) {
         let binStr = `${encoded[i]}${encoded[i + 1]}${encoded[i + 2]}${encoded[i + 3]}${encoded[i + 4]}${encoded[i + 5]}${encoded[i + 6]}${encoded[i + 7]}`;
         adapted.push(parseInt(binStr, 2));
+        // console.log(parseInt(binStr, 2));
     }
 
     adapted = utils.normalize(adapted, size);
