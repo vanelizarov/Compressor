@@ -31,7 +31,13 @@ const encode = (imageData, callback) => {
 
     et.finish();
 
-    callback(encoded, et.measure());
+    let length = 0;
+
+    for (let i = 0, len = encoded.length; i < len; i += 2) {
+        length += Math.ceil(encoded[i] / 256);
+    }
+
+    callback(encoded, et.measure(), length);
 
 };
 
@@ -58,8 +64,12 @@ const adapt = (encoded, size, callback) => {
 
     let adapted = [];
 
-    for (let i = 0, len = encoded.length; i < len; i += 2) {
+    for (let i = 1, len = encoded.length; i < len; i += 2) {
         adapted.push(encoded[i]);
+    }
+
+    for (let i = 3, len = encoded.length; i < len; i += 4) {
+        adapted[i] = 255;
     }
 
     adapted = utils.normalize(adapted, size, 255);
