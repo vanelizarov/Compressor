@@ -38,7 +38,7 @@ const encode = (imageData, callback) => {
 
     et.finish();
 
-    callback(encoded, et.measure());
+    callback(encoded, et.measure(), encoded.length);
 
 };
 
