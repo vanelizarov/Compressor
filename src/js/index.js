@@ -9,6 +9,8 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 import App from './components/app';
+import Frames from './components/frames';
+import Analytics from './components/analytics';
 
 import allReducers from './reducers';
 
@@ -25,7 +27,10 @@ class Aggregator {
         ReactDOM.render(
             <HotContainer>
                 <Provider store={store}>
-                    <App />
+                    <App>
+                        <Frames />
+                        <Analytics />
+                    </App>
                 </Provider>
             </HotContainer>,
             appContainer
@@ -39,7 +44,10 @@ class Aggregator {
                 ReactDOM.render(
                     <HotContainer>
                         <Provider store={store}>
-                            <App />
+                            <App>
+                                <Frames />
+                                <Analytics />
+                            </App>
                         </Provider>
                     </HotContainer>,
                     appContainer
