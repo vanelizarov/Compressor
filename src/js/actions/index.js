@@ -2,7 +2,8 @@ import {
     SET_IMG_DATA,
     SET_VIDEO_STREAM,
     SET_CAN_PLAY,
-    SET_IS_STREAMING
+    SET_IS_STREAMING,
+    SET_FRAME_DATA
 } from './types';
 
 
@@ -29,6 +30,13 @@ export const setCanPlay = () => {
 export const setIsStreaming = () => {
     return {
         type: SET_IS_STREAMING
+    }
+};
+
+export const setFrameData = (payload) => {
+    return {
+        type: SET_FRAME_DATA,
+        payload
     }
 };
 
