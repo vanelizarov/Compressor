@@ -2,7 +2,8 @@ import {
     SET_IMG_DATA,
     SET_VIDEO_STREAM,
     SET_CAN_PLAY,
-    SET_IS_STREAMING
+    SET_IS_STREAMING,
+    SET_FRAME_DATA
 } from '../actions/types';
 
 import {
@@ -17,7 +18,12 @@ export default (state = {canPlay: false, streaming: false}, action) => {
 
             return Object.assign({}, state, {
                 types: Object.assign({}, state.types, {
-                    [action.payload.type]: action.payload.data
+                    [action.payload.type]: {
+                        data: action.payload.data,
+                        time: action.payload.time,
+                        size: action.payload.size,
+                        bcr: action.payload.bcr
+                    }
                 })
             });
 
@@ -35,6 +41,13 @@ export default (state = {canPlay: false, streaming: false}, action) => {
         case SET_IS_STREAMING:
             return Object.assign({}, state, {
                 streaming: true
+            });
+
+        case SET_FRAME_DATA:
+            return Object.assign({}, state, {
+                frames: Object.assign({}, state.frames, {
+                    [action.payload.type]: action.payload.data
+                })
             });
 
         default:
