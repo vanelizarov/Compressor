@@ -2,3 +2,4 @@ export const SET_IMG_DATA = 'SET_IMG_DATA';
 export const SET_VIDEO_STREAM = 'SET_VIDEO_STREAM';
 export const SET_CAN_PLAY = 'SET_CAN_PLAY';
 export const SET_IS_STREAMING = 'SET_IS_STREAMING';
+export const SET_FRAME_DATA = 'SET_FRAME_DATA';
